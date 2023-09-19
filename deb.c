@@ -4,5 +4,9 @@
 /**
  * a practice file
  */
-testing direct branch access
+
+checking for conflict if seperate update from personal branch is done on same file in master
+return (0);
+
+testing direct branch
 return (0);
