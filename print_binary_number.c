@@ -3,23 +3,33 @@
 /**
  * print_binary_number - a function that converts
  * unsigned ints to binary
- * @num: parameter passed from va_arg(list, int)
+ * @djlist2: parameter passed from va_arg(list, int)
  * Return: count of binary outputs
  */
-
-int print_binary_number(unsigned int num)
+int print_binary_number(va_list djlist2)
 {
-	unsigned int num_len = 0;
+	int flag = 0;
+	int len = 0;
+	int i, a = 1, b;
+	unsigned int num = va_arg(djlist2, unsigned int);
+	unsigned int p;
 
-	if (num == 0 || num == 1)
+	for (i = 0; i < 32; i++)
 	{
-		num_len += djput(num + '0');
+		p = ((a << (31 - i)) & num);
+		if (p >> (31 - i))
+			flag = 1;
+		if (flag)
+		{
+			b = p >> (31 - i);
+			djput(b + 48);
+			len++;
+		}
 	}
-	if (num > 1)
+	if (len == 0)
 	{
-		print_binary_number(num / 2);
-
-		num_len += djput(num % 2 + '0');
+		len++;
+		djput('0');
 	}
-	return (num_len);
+	return (len);
 }

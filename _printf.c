@@ -2,75 +2,47 @@
 /**
  * _printf - a custom made printf function
  * @format: argument expecting variadic arguments
- * Return: count of printed characters
+ *  Return: count of printed characters
  */
-int _printf(const char *format, ...);
+
 int _printf(const char *format, ...)
 {
+	dj_structure style[] = {
+		{"%s", print_string}, {"%c", print_char},
+		{"%%", print_percent},
+		{"%i", print_int_number}, {"%d", print_dec_number},
+		{"%r", print_reverse_string},
+		{"%R", _printf_Rot13}, {"%b", print_binary_number},
+		{"%u", print_unint_number},
+		{"%o", print_octal_number}, {"%x", print_hex_number},
+		{"%X", print_Xhex_number},
+		{"%S", print_ascii_number}, {"%p", print_addr_number}
+	};
+
 	va_list djlist2;
-	unsigned int j = 0, _printflen = 0;
+	int j = 0, i, _printflen = 0;
 
 	va_start(djlist2, format);
-	if (!format)
+	if (!format || (format[0] == '%' && format[1] == '\0'))
 		return (-1);
+Here:
 	while (format[j])
 	{
-		if (format[j] == '%')
+		i = 13;
+		while (i >= 0)
 		{
-			j++;
-			switch (format[j])
+			if (style[i].id[0] == format[j] && style[i].id[1] == format[j + 1])
 			{
-				case 's':
-					_printflen = print_string(va_arg(djlist2, char *));
-					break;
-				case 'c':
-					_printflen = djput(va_arg(djlist2, int));
-					break;
-				case '%':
-					_printflen = djput(format[j]);
-					break;
-				case 'd':
-					_printflen = print_dec_number(va_arg(djlist2, int));
-					break;
-				case 'i':
-					_printflen = print_int_number(va_arg(djlist2, int));
-					break;
-				case 'b':
-					_printflen = print_binary_number(va_arg(djlist2, unsigned int));
-					break;
-				case 'o':
-					_printflen = print_octal_number(va_arg(djlist2, unsigned int));
-					break;
-				case 'X':
-					_printflen = print_Xhex_number(va_arg(djlist2, unsigned int));
-					break;
-				case 'x':
-					_printflen = print_hex_number(va_arg(djlist2, unsigned int));
-					break;
-				case 'u':
-					_printflen = print_unint_number(va_arg(djlist2, unsigned int));
-					break;
-				case 'p':
-					_printflen = print_addr_number(va_arg(djlist2, void *));
-					break;
-				case 'r':
-					_printflen = djput(format[j - 1]);
-					_printflen = djput(format[j]);
-					break;
-				case 'S':
-					_printflen = print_ascii_number(va_arg(djlist2, char *));
-					break;
-				case 'R':
-					_printflen = _printf_Rot13(va_arg(djlist2, char *));
-					break;
+				_printflen += style[i].f(djlist2);
+				j = j + 2;
+				goto Here;
 			}
+			i--;
 		}
-		else
-		{
-			_printflen += djput(format[j]);
-		}
+		djput(format[j]);
+		_printflen++;
 		j++;
 	}
-	return (_printflen);
 	va_end(djlist2);
+	return (_printflen);
 }

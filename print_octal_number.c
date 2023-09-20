@@ -2,23 +2,34 @@
 
 /**
  * print_octal_number - prints octal numbers
- * @num: parameter passed
+ * @djlist2: parameter passed
  * Return: octal number
  */
-
-int print_octal_number(unsigned int num)
+int print_octal_number(va_list djlist2)
 {
-	unsigned int num_len = 0;
+	int i;
+	int *my_array;
+	int len = 0;
+	unsigned int num = va_arg(djlist2, unsigned int);
+	unsigned int temp = num;
 
-	if (num <= 7)
+	while (num / 8 != 0)
 	{
-		num_len += djput(num + '0');
+		num /= 8;
+		len++;
 	}
-	if (num > 7)
-	{
-		print_octal_number(num / 8);
+	len++;
+	my_array = malloc(len * sizeof(int));
 
-		num_len += djput(num % 8 + '0');
+	for (i = 0; i < len; i++)
+	{
+		my_array[i] = temp % 8;
+		temp /= 8;
 	}
-	return (num_len);
+	for (i = len - 1; i >= 0; i--)
+	{
+		djput(my_array[i] + '0');
+	}
+	free(my_array);
+	return (len);
 }

@@ -1,49 +1,36 @@
 #include "main.h"
 /**
  * print_Xhex_number - prints uppercase hex numbers
- * @num: parameter passed
+ * @djlist2: parameter passed
  * Return: uppercase hex
  */
-int print_Xhex_number(unsigned int num)
+int print_Xhex_number(va_list djlist2)
 {
-	unsigned int x, num_len = 0;
+	int i;
+	int *my_array;
+	int _printflen = 0;
+	unsigned int num = va_arg(djlist2, unsigned int);
+	unsigned int temp = num;
 
-	if (num > 9)
+	while (num / 16 != 0)
 	{
-		print_Xhex_number(num / 16);
-		x = (num % 16);
-		if (x > 9)
-		{
-			switch (x)
-			{
-				case 10:
-					num_len += djput('A');
-					break;
-				case 11:
-					num_len += djput('B');
-					break;
-				case 12:
-					num_len += djput('C');
-					break;
-				case 13:
-					num_len += djput('D');
-					break;
-				case 14:
-					num_len += djput('E');
-					break;
-				case 15:
-					num_len += djput('F');
-					break;
-			}
-		}
-		else
-		{
-			num_len += djput(x + '0');
-		}
+		num /= 16;
+		_printflen++;
 	}
-	else
+	_printflen++;
+	my_array = malloc(_printflen * sizeof(int));
+
+	for (i = 0; i < _printflen; i++)
 	{
-		num_len += djput(num + '0');
+		my_array[i] = temp % 16;
+		temp /= 16;
 	}
-	return (num_len);
+	for (i = _printflen - 1; i >= 0; i--)
+	{
+		if (my_array[i] > 9)
+			my_array[i] = my_array[i] + 7;
+		djput(my_array[i] + '0');
+	}
+	free(my_array);
+	return (_printflen);
 }
