@@ -1,0 +1,38 @@
+_printf  " ALX Cohort 18 " "" " Terminal Programmer's Manual (man)"
+
+NAME
+_printf
+format and print data.
+
+SYNOPSIS
+#include <main.h>
+
+PROTOTYPE
+int _printf(const char *format, ...);
+...
+DESCRIPTION
+_printf() will produce output according to the stdio.h which is the standard output. 
+_printf() will print to stdio.h which is the standard output;
+
+SPECIFIERS
+
+Decimal integers (%d)
+Unsigned decimal integers (%u)
+Strings (%s)
+Hex integers (%x %X)
+Octal integers (%o)
+Binary integers (%b)
+Pointer notation for integers (%p)
+Print a string, but print hidden characters as hex codes (%S)
+Reversed strings (%r)
+Rot13'd strings (%R)
+
+FLAGS AND OPTIONS:
+
+Width
+Precision
++/space to set sign
+- to left justify
+# to display hex/octal binary prefix
+* and .* to accept variables for width and precision
+hh, h, and l length flags
