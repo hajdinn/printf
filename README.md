@@ -35,6 +35,17 @@ Returns the number of characters in the output string on success
 The function is called this way: _printf("format string", arguments...) 
 where format string can contains flags, conversion specifiers, with characters.
 
+### specifiers
+1. (%d) 
+2. (%u)
+3. (%s)
+4. (%x %X)
+5. (%o)
+6. (%b)
+7. (%p)
+8. (%S)
+9. (%r)
+10. (%R)
 
 ### Tasks
 
