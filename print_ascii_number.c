@@ -3,37 +3,39 @@
 /**
  * print_ascii_number - a function that print unprintable
  * ascii characters by replacing it with '\x'
- * @str: parameter passed from va_arg(list, char*)
+ * @djlist2: parameter passed from va_arg(djlist2, char*)
  * Return: count of printed character
  */
 
-int print_ascii_number(char *str)
+int print_ascii_number(va_list djlist2)
 {
-	unsigned int num_len = 0;
-	int k;
+	char *s;
+	int i, len = 0;
+	int cast;
 
-	if (str)
+	s = va_arg(djlist2, char *);
+	if (s == NULL)
+		s = "(null)";
+	for (i = 0; s[i] != '\0'; i++)
 	{
-		k = 0;
-		while (str[k])
+		if (s[i] < 32 || s[i] >= 127)
 		{
-			if ((str[k] >= 0 && str[k] < 32) || str[k] >= 127)
+			djput('\\');
+			djput('x');
+			len = len + 2;
+			cast = s[i];
+			if (cast < 16)
 			{
-				num_len += djput('\\');
-				num_len += djput('x');
-				num_len += print_Xhex_number(str[k]);
+				djput('0');
+				len++;
 			}
-			else
-			{
-				num_len += djput(str[k]);
-			}
-			k++;
+			len += print_Xhex_number_help(cast);
+		}
+		else
+		{
+			djput(s[i]);
+			len++;
 		}
 	}
-	else
-	{
-		str = "(null)";
-	}
-	return (num_len);
+	return (len);
 }
-

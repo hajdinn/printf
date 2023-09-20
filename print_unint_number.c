@@ -2,24 +2,44 @@
 
 /**
  * print_unint_number - a function that prints unsigned int
- * @num: paramater from va-arg(list, unsigned int)
+ * @djlist2: paramater from va-arg(list, unsigned int)
  * Return: count of output
  */
-
-int print_unint_number(unsigned int num)
+int print_unint_number(va_list djlist2)
 {
-	unsigned int num_len = 0;
+	unsigned int n = va_arg(djlist2, unsigned int);
+	int num, last = n % 10, digit, exp = 1;
+	int  i = 1;
 
-	if (num <= 9)
+	n = n / 10;
+	num = n;
+
+	if (last < 0)
 	{
-		num_len += djput(num + '0');
+		djput('-');
+		num = -num;
+		n = -n;
+		last = -last;
+		i++;
 	}
-
-	if (num > 9)
+	if (num > 0)
 	{
-		print_int_number(num / 10);
-
-		num_len += djput(num % 10 + '0');
+		while (num / 10 != 0)
+		{
+			exp = exp * 10;
+			num = num / 10;
+		}
+		num = n;
+		while (exp > 0)
+		{
+			digit = num / exp;
+			djput(digit + '0');
+			num = num - (digit * exp);
+			exp = exp / 10;
+			i++;
+		}
 	}
-	return (num_len);
+	djput(last + '0');
+
+	return (i);
 }
