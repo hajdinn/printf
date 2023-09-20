@@ -1,6 +1,6 @@
 #include "main.h"
 /**
- * print_Xhex_number - prints uppercase hex numbers
+ * print_Xhex_number_help - prints uppercase hex numbers
  * @num: parameter passed
  * Return: uppercase hex
  */

@@ -1,7 +1,7 @@
 #include "main.h"
 
 /**
- * print_hex_number - prints lowercase hex
+ * print_hex_number_help - prints lowercase hex
  * @num: parameter  passed
  * Return: lowercase hex unsigned int
  */
